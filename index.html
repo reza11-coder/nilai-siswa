@@ -1,220 +1,505 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Absensi Shalat Zuhur - SMPN 11 Lhokseumawe</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Inline jsQR (fallback murni tanpa CDN) -->
-  <script>
-    // jsQR library (minified) — small enough to inline
-    // sumber: https://github.com/cozmo/jsQR
-    /* jsQR START */
-    // versi singkat (hapus untuk ringkas di sini):
-    // Karena sangat panjang jika disisipkan di sini, mohon beritahu saya jika Anda ingin versi lengkap.
-    // Untuk saat ini, saya buat placeholder fungsi agar tidak error.
-    // --- PLACEHOLDER: user boleh meminta versi lengkap jika ingin pemindaian QR asli ---
-    function jsQR(){ return null; }
-    /* jsQR END */
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Judul Halaman Diperbarui -->
+    <title>Daftar Nilai Informatika Kelas 9 Tahun 2025</title>
+    <!-- Memuat Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Konfigurasi Font Inter -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Warna latar belakang terang */
+        }
+        /* Styling untuk loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #10b981; /* Warna hijau emerald */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .footer {
+            background-color: #1f2937; /* bg-gray-800 */
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen font-sans text-gray-800">
-  <div class="max-w-4xl mx-auto p-6">
-    <header class="flex items-center justify-between mb-6">
-      <div>
-        <h1 class="text-2xl font-semibold">Absensi Shalat Zuhur</h1>
-        <p class="text-sm text-gray-500">SMP Negeri 11 Lhokseumawe — Scan barcode untuk absen</p>
-      </div>
-      <div class="text-right">
-        <span class="inline-block bg-white px-3 py-1 rounded-xl shadow-sm text-sm">Tampilan: Friendly • Elegan</span>
-      </div>
-    </header>
+<body class="flex flex-col min-h-screen">
 
-    <main class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Scanner card -->
-      <section class="bg-white p-4 rounded-2xl shadow-sm">
-        <h2 class="text-lg font-medium mb-3">Pemindai Barcode</h2>
+    <main class="flex-grow p-4 sm:p-8">
+        <div class="max-w-7xl mx-auto bg-white p-6 sm:p-10 rounded-xl shadow-2xl">
 
-        <video id="camera" class="w-full rounded-lg border border-gray-200" style="min-height:260px; background:#000" autoplay></video>
-        <canvas id="canvas" class="hidden"></canvas>
+            <!-- Message Box untuk notifikasi -->
+            <div id="messageBox" class="hidden fixed top-4 right-4 z-50 bg-red-500 text-white p-4 rounded-lg shadow-xl transition-opacity duration-300" role="alert">
+                <p id="messageText"></p>
+            </div>
 
-        <div class="mt-3 flex gap-2">
-          <button id="startBtn" class="px-3 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">Mulai Scan</button>
-          <button id="stopBtn" class="px-3 py-2 bg-gray-200 rounded-lg hover:bg-gray-300" disabled>Berhenti</button>
+            <!-- Header dengan Thumbnail dan Nama -->
+            <header class="flex flex-col items-center justify-center mb-8">
+                
+                <!-- SoundCloud Player (Otomatis Putar) -->
+                <!-- Catatan: Autoplay pada iframe mungkin diblokir oleh kebijakan browser modern, namun kode sudah disetel ke auto_play=true -->
+                <div class="mb-6 w-full max-w-lg mx-auto rounded-xl overflow-hidden shadow-lg">
+                    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2213534183&color=%23ff5500&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+                    <div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;" class="p-2 bg-gray-900 text-center">
+                        <a href="https://soundcloud.com/reza-07-849961971" title="Reza 07" target="_blank" style="color: #cccccc; text-decoration: none;">Reza 07</a> · <a href="https://soundcloud.com/reza-07-849961971/fahmil-arabi-syair-rayu-kumbang" title="wwd.mFahmil Arabi - Syair Rayu Kumbang" target="_blank" style="color: #cccccc; text-decoration: none;">wwd.mFahmil Arabi - Syair Rayu Kumbang</a>
+                    </div>
+                </div>
+
+                <!-- Teks Bergerak (Marquee) Diperbarui -->
+                <div class="w-full text-center mb-4 p-2 bg-yellow-100 rounded-lg shadow-inner border-y-2 border-yellow-300">
+                    <marquee class="text-lg font-bold text-yellow-800" behavior="scroll" direction="left" scrollamount="6">
+                        Selamat Datang Siswa- Siswi Mapel Informatika SMP Negeri 11 Lhokseumawe
+                    </marquee>
+                </div>
+
+                <!-- Foto Profil Reza, ST dengan URL Baru -->
+                <img src="https://iili.io/fHYokxV.jpg" 
+                     alt="Foto Profil Reza, ST" 
+                     class="w-20 h-20 rounded-full border-4 border-emerald-600 shadow-lg mb-2 object-cover">
+                
+                <!-- Nama di bawah Thumbnail -->
+                <p class="text-lg font-bold text-gray-800 mb-4">Reza, ST.</p>
+
+                <!-- Judul Diperbarui -->
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-900 text-center">
+                    Daftar Nilai Informatika Kelas 9 Tahun 2025
+                </h1>
+            </header>
+            
+            <!-- Kontainer Loading dan Data -->
+            <div id="loading" class="flex justify-center items-center py-12">
+                <div class="spinner"></div>
+                <p class="ml-4 text-lg text-gray-600">Memuat data dari Google Sheets...</p>
+            </div>
+
+            <div id="data-container" class="hidden">
+                
+                <!-- New Buttons Section: Preview dan Download -->
+                <div class="flex justify-center sm:justify-end gap-4 mb-6">
+                    <button id="previewBtn" class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 rounded-lg shadow-md hover:bg-emerald-700 transition duration-150 ease-in-out">
+                        Preview (Muat Ulang Data)
+                    </button>
+                    <button id="downloadBtn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 transition duration-150 ease-in-out">
+                        Download (Unduh CSV)
+                    </button>
+                </div>
+
+                <!-- Kontrol Pencarian dan Paginasi Atas -->
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0">
+                    
+                    <!-- Kontrol Pencarian -->
+                    <div class="w-full sm:w-1/3">
+                        <input type="text" id="searchInput" placeholder="Cari berdasarkan NIS, Nama, Kelas, atau lainnya..." class="w-full p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                    </div>
+
+                    <!-- Kontrol Rows per Page (Ditempatkan di kanan) -->
+                    <div class="flex items-center space-x-2">
+                        <label for="rowsPerPage" class="text-sm font-medium text-gray-700">Tampilkan:</label>
+                        <select id="rowsPerPage" class="p-2 border border-gray-300 rounded-lg shadow-sm focus:ring-emerald-500 focus:border-emerald-500 transition duration-150 ease-in-out">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="99999">Semua</option>
+                        </select>
+                        <span class="text-sm text-gray-500">baris</span>
+                    </div>
+                </div>
+
+                <!-- Area Tabel - Responsif -->
+                <div class="overflow-x-auto shadow-xl rounded-xl border border-gray-200">
+                    <table id="dataTable" class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-emerald-600 text-white sticky top-0">
+                            <tr id="table-headers">
+                                <!-- Headers akan dimasukkan di sini oleh JS -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body" class="bg-white divide-y divide-gray-100">
+                            <!-- Data akan dimasukkan di sini oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Kontrol Paginasi Bawah dan Informasi -->
+                <div id="pagination-controls" class="flex flex-col sm:flex-row justify-between items-center mt-6 space-y-4 sm:space-y-0">
+                    
+                    <!-- Informasi Baris -->
+                    <div id="row-info" class="text-sm text-gray-700 font-medium">
+                        <!-- 'Menampilkan 1 hingga 10 dari 50 entri' -->
+                    </div>
+                    
+                    <!-- Tombol Paginasi -->
+                    <div id="page-buttons" class="flex space-x-2">
+                        <button id="prev-page" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                            &larr; Sebelumnya
+                        </button>
+                        <span id="page-number" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg">1</span>
+                        <button id="next-page" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed">
+                            Berikutnya &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pesan Error -->
+            <div id="error-message" class="hidden text-center py-12 text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <p class="text-lg font-semibold">Gagal memuat data.</p>
+                <p class="text-sm">Pastikan URL Google Sheets sudah benar dan telah dipublikasikan sebagai CSV.</p>
+            </div>
+
         </div>
-
-        <p class="mt-3 text-sm text-gray-500">Fitur ini menggunakan kamera langsung tanpa library eksternal. Jika QR/barcode tidak terbaca, gunakan input manual.</p>
-
-        <div class="mt-4 border-t pt-4">
-          <h3 class="text-sm font-medium mb-2">Hasil Scan</h3>
-          <div id="scanResult" class="text-sm text-gray-700">- belum ada pemindaian -</div>
-        </div>
-      </section>
-
-      <!-- Manual & log -->
-      <section class="bg-white p-4 rounded-2xl shadow-sm">
-        <h2 class="text-lg font-medium mb-3">Masuk Manual & Log Absensi</h2>
-
-        <form id="manualForm" class="space-y-3">
-          <div>
-            <label class="block text-sm text-gray-600">NIS</label>
-            <input id="nisInput" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Contoh: 123456" />
-          </div>
-          <div>
-            <label class="block text-sm text-gray-600">Nama (opsional)</label>
-            <input id="nameInput" class="mt-1 w-full border rounded-lg px-3 py-2" placeholder="Contoh: Ahmad" />
-          </div>
-          <div class="flex gap-2">
-            <button class="px-4 py-2 bg-green-600 text-white rounded-lg" type="submit">Absen Manual</button>
-            <button id="clearLog" type="button" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg">Hapus Semua</button>
-            <button id="exportCsv" type="button" class="ml-auto px-4 py-2 bg-blue-600 text-white rounded-lg">Export CSV</button>
-          </div>
-        </form>
-
-        <div class="mt-4">
-          <h3 class="text-sm font-medium mb-2">Daftar Absensi (terbaru di atas)</h3>
-          <div class="overflow-x-auto">
-            <table class="w-full text-sm table-auto">
-              <thead class="text-left text-gray-500">
-                <tr>
-                  <th class="pb-2">Waktu</th>
-                  <th class="pb-2">NIS</th>
-                  <th class="pb-2">Nama</th>
-                </tr>
-              </thead>
-              <tbody id="logBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
     </main>
+    
+    <!-- Footer -->
+    <footer class="footer mt-8 py-4 text-center">
+        <!-- Baris Copyright -->
+        <div class="text-white text-xs">
+            @2025 Informatika by Reza ST
+        </div>
+    </footer>
 
-    <footer class="mt-6 text-center text-xs text-gray-400">Dikembangkan untuk SMP Negeri 11 Lhokseumawe — Silakan sesuaikan.</footer>
-  </div>
 
-<script>
-// Storage
-const storageKey = 'absensiZuhur_smpn11';
-let stream = null;
-let scanning = false;
+    <script>
+        // Data Global dan State Paginasi
+        let allData = [];
+        let filteredData = []; // Digunakan untuk menyimpan hasil pencarian
+        let tableHeaders = [];
+        let currentPage = 1;
+        let rowsPerPage = 10;
+        let searchTerm = ''; // State untuk menyimpan kata kunci pencarian
+        
+        // URL Read-Only CSV yang telah diperbaiki
+        const CSV_READ_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTKazHAo1y678Zap12C5RgmqTsTGWou9X3eGnT6yH_zjBWLCh6ArnUp302h9PkEfdn_351biwZzmQ2z/pub?output=csv&gid=0';
 
-function loadLog(){ return JSON.parse(localStorage.getItem(storageKey) || '[]'); }
-function saveLog(log){ localStorage.setItem(storageKey, JSON.stringify(log)); }
-function renderLog(){
-  const log = loadLog();
-  const tbody = document.getElementById('logBody');
-  tbody.innerHTML = '';
-  for(const entry of log.slice().reverse()){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td class="py-2">${new Date(entry.time).toLocaleString()}</td>
-                    <td class="py-2 font-medium">${entry.nis}</td>
-                    <td class="py-2">${entry.name || '-'}</td>`;
-    tbody.appendChild(tr);
-  }
-}
-function addAttendance(nis, name){
-  const log = loadLog();
-  log.push({time: Date.now(), nis, name});
-  saveLog(log);
-  renderLog();
-}
+        // Mendapatkan elemen DOM
+        const loadingEl = document.getElementById('loading');
+        const dataContainerEl = document.getElementById('data-container');
+        const errorEl = document.getElementById('error-message');
+        const headersEl = document.getElementById('table-headers');
+        const bodyEl = document.getElementById('table-body');
+        const rowsPerPageEl = document.getElementById('rowsPerPage');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const pageNumberEl = document.getElementById('page-number');
+        const rowInfoEl = document.getElementById('row-info');
+        const searchInputEl = document.getElementById('searchInput'); // Elemen input pencarian
+        const previewBtn = document.getElementById('previewBtn'); // Tombol Preview
+        const downloadBtn = document.getElementById('downloadBtn'); // Tombol Download
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
 
-// Camera scanning (manual — no external library)
-async function startScanner(){
-  const video = document.getElementById('camera');
-  const startBtn = document.getElementById('startBtn');
-  const stopBtn = document.getElementById('stopBtn');
-  scanning = true;
+        /**
+         * Menampilkan pesan notifikasi sementara
+         */
+        function showMessage(text, isError = false) {
+            messageText.textContent = text;
+            messageBox.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-xl transition-opacity duration-300 ${isError ? 'bg-red-500' : 'bg-green-500'}`;
+            messageBox.classList.remove('hidden');
 
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 3000);
+        }
 
-  try{
-    stream = await navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' } });
-    video.srcObject = stream;
-    video.setAttribute('playsinline', true);
-    await video.play();
-    requestAnimationFrame(tick);
-  }catch(e){
-    alert('Kamera tidak tersedia atau ditolak.');
-    startBtn.disabled = false;
-    stopBtn.disabled = true;
-  }
-}
+        /**
+         * Mengubah teks CSV menjadi array of objects.
+         */
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length === 0) return { headers: [], rows: [] };
 
-function stopScanner(){
-  scanning = false;
-  const startBtn = document.getElementById('startBtn');
-  const stopBtn = document.getElementById('stopBtn');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+            const rows = [];
 
-  if(stream){ stream.getTracks().forEach(t=>t.stop()); }
-  stream = null;
-  stopBtn.disabled = true;
-  startBtn.disabled = false;
-  document.getElementById('scanResult').textContent = '- pemindaian dihentikan -';
-}
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line.trim()) continue;
 
-function tick(){
-  if(!scanning) return;
-  const video = document.getElementById('camera');
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
+                const values = line.split(',').map(v => v.trim().replace(/"/g, ''));
 
-  if(video.readyState === video.HAVE_ENOUGH_DATA){
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    ctx.drawImage(video,0,0,canvas.width,canvas.height);
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] || '';
+                });
+                
+                // Pastikan baris memiliki data yang valid (setidaknya satu nilai bukan string kosong)
+                if (Object.values(row).some(v => v !== '')) {
+                    rows.push(row);
+                }
+            }
+            return { headers, rows };
+        }
 
-    // NOTE: jsQR placeholder — tidak akan decode sungguhan
-    const code = jsQR();
-    if(code){ handleScan(code.data); }
-  }
+        /**
+         * Mengambil data dari Google Sheets URL
+         */
+        async function fetchData() {
+            loadingEl.classList.remove('hidden');
+            dataContainerEl.classList.add('hidden');
+            errorEl.classList.add('hidden');
 
-  requestAnimationFrame(tick);
-}
+            try {
+                const response = await fetch(CSV_READ_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvText = await response.text();
+                const parsedData = parseCSV(csvText);
 
-function handleScan(text){
-  scanning = false;
-  stopScanner();
+                tableHeaders = parsedData.headers;
+                allData = parsedData.rows;
 
-  const parts = text.split('|');
-  const nis = parts[0].trim();
-  const name = parts[1] ? parts[1].trim() : '';
+                if (allData.length === 0) {
+                    throw new Error("Data kosong atau gagal diurai.");
+                }
 
-  addAttendance(nis, name);
-  document.getElementById('scanResult').textContent = `${nis} ${name}`;
-}
+                // Inisialisasi tampilan
+                renderHeaders();
+                applySearchAndRender(); 
+                
+                loadingEl.classList.add('hidden');
+                dataContainerEl.classList.remove('hidden');
+                showMessage('Data berhasil dimuat ulang.', false);
 
-// Manual form
-manualForm.addEventListener('submit', e =>{
-  e.preventDefault();
-  const nis = nisInput.value.trim();
-  const name = nameInput.value.trim();
-  if(!nis){ alert('Masukkan NIS'); return; }
-  addAttendance(nis, name);
-  nisInput.value="";
-  nameInput.value="";
-});
+            } catch (error) {
+                console.error("Gagal memuat atau mengurai data:", error);
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
+                showMessage('Gagal memuat data. Cek koneksi atau URL Sheets.', true);
+            }
+        }
 
-document.getElementById('clearLog').addEventListener('click', ()=>{
-  if(confirm('Hapus semua data?')){
-    localStorage.removeItem(storageKey);
-    renderLog();
-  }
-});
+        /**
+         * Konversi Array of Objects menjadi string CSV
+         */
+        function convertToCSV(data, headers) {
+            if (data.length === 0 || headers.length === 0) return '';
+            
+            // Fungsi untuk mengamankan nilai (handle koma dan kutipan)
+            const escapeValue = (value) => {
+                if (value === null || value === undefined) return '';
+                let str = String(value);
+                // Mengganti semua kutipan ganda dengan dua kutipan ganda
+                str = str.replace(/"/g, '""');
+                // Jika string mengandung koma, baris baru, atau kutipan ganda, bungkus dengan kutipan ganda
+                if (str.includes(',') || str.includes('\n') || str.includes('"')) {
+                    return `"${str}"`;
+                }
+                return str;
+            };
 
-document.getElementById('exportCsv').addEventListener('click', ()=>{
-  const log = loadLog();
-  if(!log.length){ alert('Tidak ada data'); return; }
-  const rows = [['Waktu','NIS','Nama']];
-  for(const r of log){ rows.push([new Date(r.time).toISOString(), r.nis, r.name]); }
-  const csv = rows.map(r=>r.join(',')).join('
-');
-  const blob = new Blob([csv],{type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'absensi.csv';
-  a.click();
-  URL.revokeObjectURL(url);
+            // 1. Header Row
+            const csvHeaders = headers.map(escapeValue).join(',');
+            
+            // 2. Data Rows
+            const csvRows = data.map(row => {
+                // Map header ke nilai yang sesuai di baris
+                return headers.map(header => escapeValue(row[header])).join(',');
+            });
+
+            return [csvHeaders, ...csvRows].join('\n');
+        }
+
+        /**
+         * Trigger download CSV
+         */
+        function downloadCSV() {
+            if (filteredData.length === 0) {
+                showMessage('Tidak ada data yang cocok dengan filter saat ini untuk diunduh.', true); 
+                return;
+            }
+
+            const csvString = convertToCSV(filteredData, tableHeaders);
+            
+            // Membuat Blob
+            const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            // Menentukan nama file berdasarkan judul baru
+            const fileName = 'Daftar_Nilai_Informatika_Kelas_9_2025.csv';
+
+            if (navigator.msSaveBlob) { // Untuk IE 10+
+                navigator.msSaveBlob(blob, fileName);
+                showMessage('Data berhasil diunduh.', false);
+            } else {
+                link.href = URL.createObjectURL(blob);
+                link.download = fileName;
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showMessage('Data berhasil diunduh.', false);
+            }
+        }
+        
+        /**
+         * Menerapkan filter pencarian pada semua data
+         */
+        function applySearchAndRender() {
+            currentPage = 1; 
+            const term = searchTerm.toLowerCase();
+
+            if (!term) {
+                filteredData = allData;
+            } else {
+                filteredData = allData.filter(row => {
+                    return Object.values(row).some(value => {
+                        return String(value).toLowerCase().includes(term);
+                    });
+                });
+            }
+            renderTable();
+        }
+
+
+        /**
+         * Merender header tabel
+         */
+        function renderHeaders() {
+            headersEl.innerHTML = ''; 
+            tableHeaders.forEach(headerText => {
+                const th = document.createElement('th');
+                // Kelas border-r untuk pemisah kolom
+                th.className = 'px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider border-r border-emerald-500 last:border-r-0';
+                th.textContent = headerText;
+                headersEl.appendChild(th);
+            });
+            
+            // Kolom Aksi (Cetak) telah dihapus
+        }
+
+        /**
+         * Merender tubuh tabel berdasarkan data yang sudah difilter/dicari
+         */
+        function renderTable() {
+            const dataToRender = filteredData; 
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedData = dataToRender.slice(start, end);
+
+            bodyEl.innerHTML = ''; 
+
+            // totalCols sekarang hanya = jumlah header data (tidak +1 untuk Aksi)
+            const totalCols = tableHeaders.length; 
+
+            if (paginatedData.length === 0) {
+                bodyEl.innerHTML = `<tr><td colspan="${totalCols}" class="px-6 py-4 text-center text-gray-500">Tidak ada data yang cocok dengan pencarian Anda.</td></tr>`;
+                renderPaginationInfo(0, 0, dataToRender.length);
+                return;
+            }
+
+            paginatedData.forEach((row, rowIndex) => {
+                const tr = document.createElement('tr');
+                tr.className = rowIndex % 2 === 0 ? 'bg-gray-50 hover:bg-gray-100 transition duration-150' : 'bg-white hover:bg-gray-100 transition duration-150';
+                
+                tableHeaders.forEach(header => {
+                    const td = document.createElement('td');
+                    td.className = 'px-6 py-4 whitespace-nowrap text-sm text-gray-900';
+                    td.textContent = row[header];
+                    tr.appendChild(td);
+                });
+
+                bodyEl.appendChild(tr);
+            });
+
+            updatePaginationControls(dataToRender.length); 
+            renderPaginationInfo(start + 1, start + paginatedData.length, dataToRender.length);
+        }
+
+        /**
+         * Memperbarui tombol paginasi berdasarkan jumlah data yang difilter
+         */
+        function updatePaginationControls(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage >= totalPages;
+            
+            pageNumberEl.textContent = `${currentPage} dari ${totalPages}`;
+
+            if (rowsPerPage >= totalRows && totalRows > 0) {
+                prevPageBtn.classList.add('hidden');
+                nextPageBtn.classList.add('hidden');
+                pageNumberEl.classList.add('hidden');
+            } else if (totalRows === 0) {
+                 prevPageBtn.classList.add('hidden');
+                nextPageBtn.classList.add('hidden');
+                pageNumberEl.classList.add('hidden');
+            } else {
+                prevPageBtn.classList.remove('hidden');
+                nextPageBtn.classList.remove('hidden');
+                pageNumberEl.classList.remove('hidden');
+            }
+        }
+        
+        /**
+         * Merender informasi baris yang ditampilkan
+         */
+        function renderPaginationInfo(start, end, total) {
+            if (rowsPerPage >= total || total === 0) {
+                 rowInfoEl.textContent = `Menampilkan ${total} entri`;
+            } else {
+                rowInfoEl.textContent = `Menampilkan ${start} hingga ${end} dari ${total} entri`;
+            }
+        }
+
+        /**
+         * Handler untuk mengubah halaman
+         */
+        function changePage(delta) {
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            const newPage = currentPage + delta;
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderTable();
+            }
+        }
+
+        /**
+         * Handler untuk mengubah jumlah baris per halaman
+         */
+        function changeRowsPerPage(event) {
+            rowsPerPage = parseInt(event.target.value);
+            currentPage = 1; 
+            renderTable();
+        }
+        
+        /**
+         * Handler untuk input pencarian
+         */
+        function handleSearchInput(event) {
+            searchTerm = event.target.value.trim();
+            applySearchAndRender();
+        }
+
+        // === EVENT LISTENERS ===
+        
+        rowsPerPageEl.addEventListener('change', changeRowsPerPage);
+        prevPageBtn.addEventListener('click', () => changePage(-1));
+        nextPageBtn.addEventListener('click', () => changePage(1));
+        searchInputEl.addEventListener('keyup', handleSearchInput); 
+        searchInputEl.addEventListener('change', handleSearchInput); 
+        
+        // Listener untuk tombol menu
+        previewBtn.addEventListener('click', fetchData);
+        downloadBtn.addEventListener('click', downloadCSV);
+
+
+        // Memuat data saat halaman dimuat
+        window.onload = fetchData;
+    </script>
+
+</body>
+</html>
